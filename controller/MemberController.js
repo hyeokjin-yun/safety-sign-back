@@ -4,6 +4,8 @@ import { generateJWT } from "../jwt.js";
 
 export async function signUp(req, res) {
   const { phoneNumber, name, password } = req.body;
+  console.log(phoneNumber, name, password);
+
   const hashPassword = bcrypt.hashSync(password, 10);
   const formData = [phoneNumber, hashPassword, name];
   const result = await repository.signUp(formData);
@@ -12,8 +14,6 @@ export async function signUp(req, res) {
 
 export async function login(req, res) {
   const { phoneNumber, password } = req.body;
-  console.log(phoneNumber, password);
-  
 
   try {
     const user = await repository.findUserByPhoneNumber(phoneNumber);

@@ -11,5 +11,5 @@ app.use(cors());
 app.use("/member", MemberRouter);
 
 app.listen(8080, () => {
-  console.log("Safety Sign 서버 실행중...");
+  console.log("간판지킴이 서버 실행중...");
 });
