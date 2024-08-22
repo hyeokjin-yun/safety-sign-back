@@ -47,7 +47,6 @@ export async function serviceApply(req, res) {
           Key: fileName,
           Body: file.buffer,
           ContentType: file.mimetype,
-          ACL: "public-read",
         };
 
         const data = await s3.upload(params).promise();
@@ -89,13 +88,18 @@ export async function serviceApply(req, res) {
           )
         : null;
 
+      const signCategoryId = Number(req.body.sign_category_id);
       const installationHeight = parseFloat(req.body.installation_height);
       const signWidth = parseFloat(req.body.sign_width);
       const signHeight = parseFloat(req.body.sign_height);
+      const orderNumber = Array.from({ length: 16 }, () =>
+        Math.floor(Math.random() * 10)
+      ).join("");
 
       const formData = {
+        order_no: orderNumber,
         user_phone: userPhone,
-        sign_category_id: req.body.sign_category_id,
+        sign_category_id: signCategoryId,
         price: 0,
         construction_company_name: req.body.construction_company_name,
         representative_name: req.body.representative_name,
@@ -121,9 +125,17 @@ export async function serviceApply(req, res) {
         local_government: req.body.local_government,
       };
 
-      await repository.serviceApply(formData);
+      const success = await repository.serviceApply(formData);
 
-      res.status(200).json({ message: "Data received successfully" });
+      if (success) {
+        res
+          .status(200)
+          .json({ message: "Data received and processed successfully" });
+      } else {
+        res
+          .status(500)
+          .json({ error: "Failed to process service application" });
+      }
     } catch (error) {
       console.error("Error processing service application:", error);
       res.status(500).json({ error: "Internal server error" });
