@@ -5,6 +5,6 @@ dotenv.config();
 
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
-export function generateJWT(user) {
-  return jwt.sign({ id: user.user_phone }, jwtSecretKey);
+export function generateJWT(user_phone) {
+  return jwt.sign({ id: user_phone }, jwtSecretKey);
 }

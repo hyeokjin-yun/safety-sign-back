@@ -32,7 +32,7 @@ export async function login(req, res) {
       });
     }
 
-    const token = generateJWT(user);
+    const token = generateJWT(user.user_phone);
     res.status(200).json({ result: true, token });
   } catch (error) {
     console.error("서버 에러:", error);
