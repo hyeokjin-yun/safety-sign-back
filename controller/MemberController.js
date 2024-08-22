@@ -4,7 +4,6 @@ import { generateJWT } from "../jwt.js";
 
 export async function signUp(req, res) {
   const { phoneNumber, name, password } = req.body;
-  console.log(phoneNumber, name, password);
 
   const hashPassword = bcrypt.hashSync(password, 10);
   const formData = [phoneNumber, hashPassword, name];
