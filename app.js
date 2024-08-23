@@ -12,6 +12,6 @@ app.use(cors());
 app.use("/member", MemberRouter);
 app.use("/service", ServiceRouter);
 
-app.listen(8080, () => {
+app.listen(443, () => {
   console.log("간판지킴이 서버 실행중...");
 });
